@@ -1,0 +1,1022 @@
+{
+    "name": "Integration Telegram Bot",
+    "flow": [
+        {
+            "id": 1,
+            "module": "telegram:WatchUpdates",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 2292184
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "My Telegram Bot Updates webhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:telegramapi",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "telegram:DownloadFile",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 4437630
+            },
+            "mapper": {
+                "fileId": "{{1.message.attachment.file_id}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "telegram"
+                            },
+                            "label": "My Telegram Bot connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:telegram",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "fileId",
+                        "type": "text",
+                        "label": "File ID",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "onedrive:uploadAFile",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 4439192
+            },
+            "mapper": {
+                "data": "{{3.fileOutput}}",
+                "enter": "id",
+                "folder": "/819810EDB71C030F!sf7d9c592d52645c2b28b22872a80de64",
+                "select": "my",
+                "select1": "no",
+                "filename": "{{3.fileName}}",
+                "conflictBehavior": "replace"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "enter": {
+                            "label": "Folder Location ID"
+                        },
+                        "folder": {
+                            "mode": "chose",
+                            "path": [
+                                "Assignments"
+                            ]
+                        },
+                        "select": {
+                            "label": "My Drive"
+                        },
+                        "select1": {
+                            "label": "No"
+                        },
+                        "conflictBehavior": {
+                            "label": "Replace the existing file"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "azure"
+                            },
+                            "label": "My Microsoft connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:azure",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "enter",
+                        "type": "select",
+                        "label": "Enter (Folder Location ID & Path)",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "id",
+                                "path"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filename",
+                        "type": "filename",
+                        "label": "File Name",
+                        "required": true
+                    },
+                    {
+                        "name": "data",
+                        "type": "buffer",
+                        "label": "Data",
+                        "required": true
+                    },
+                    {
+                        "name": "conflictBehavior",
+                        "type": "select",
+                        "label": "If the File with the Same Name Exists",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "replace",
+                                "rename",
+                                "fail"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Choose your OneDrive location",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "my",
+                                "site",
+                                "group"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "select1",
+                        "type": "select",
+                        "label": "Enable to Enter a Drive ID",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "yes",
+                                "no"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "folder",
+                        "type": "folder",
+                        "label": "Folder"
+                    },
+                    {
+                        "name": "enter",
+                        "type": "select",
+                        "label": "Enter (Folder Location ID & Path)",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "id",
+                                "path"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "filename",
+                        "type": "filename",
+                        "label": "File Name",
+                        "required": true
+                    },
+                    {
+                        "name": "data",
+                        "type": "buffer",
+                        "label": "Data",
+                        "required": true
+                    },
+                    {
+                        "name": "conflictBehavior",
+                        "type": "select",
+                        "label": "If the File with the Same Name Exists",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "replace",
+                                "rename",
+                                "fail"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Choose your OneDrive location",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "my",
+                                "site",
+                                "group"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "select1",
+                        "type": "select",
+                        "label": "Enable to Enter a Drive ID",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "yes",
+                                "no"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "folder",
+                        "type": "folder",
+                        "label": "Folder"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 10,
+            "module": "pdf-co:PDFToAnything",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 4439389
+            },
+            "mapper": {
+                "async": 15000,
+                "export": {
+                    "exportType": "downloadFile"
+                },
+                "import": {
+                    "data": "{{3.fileOutput}}",
+                    "name": "{{3.fileName}}",
+                    "importType": "upload"
+                },
+                "inline": true,
+                "convert": {
+                    "convertType": "toTextSimple"
+                },
+                "expiration": "60"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 900,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "async": {
+                            "mode": "chose",
+                            "label": "Async"
+                        },
+                        "export": {
+                            "nested": {
+                                "exportType": {
+                                    "label": "Download a File"
+                                }
+                            }
+                        },
+                        "import": {
+                            "nested": {
+                                "importType": {
+                                    "label": "Upload a File"
+                                }
+                            }
+                        },
+                        "inline": {
+                            "mode": "chose"
+                        },
+                        "convert": {
+                            "nested": {
+                                "convertType": {
+                                    "label": "PDF to Text (simple, no layout, fast)"
+                                }
+                            }
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "pdf-co"
+                            },
+                            "label": "My PDF.co connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:pdf-co",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "import",
+                        "spec": [
+                            {
+                                "name": "importType",
+                                "type": "select",
+                                "label": "Input File",
+                                "required": true,
+                                "validate": {
+                                    "enum": [
+                                        "upload",
+                                        "url"
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "data",
+                                "type": "buffer",
+                                "label": "Data",
+                                "required": true
+                            },
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Output File Name"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Import Options",
+                        "required": true
+                    },
+                    {
+                        "name": "convert",
+                        "spec": [
+                            {
+                                "name": "convertType",
+                                "type": "select",
+                                "label": "Convert Type",
+                                "required": true,
+                                "validate": {
+                                    "enum": [
+                                        "toTextSimple",
+                                        "toText",
+                                        "toCsv",
+                                        "toJson2",
+                                        "toJson",
+                                        "toXml",
+                                        "toXls",
+                                        "toXlsx",
+                                        "toHtml",
+                                        "toJpg",
+                                        "toPng",
+                                        "toTiff"
+                                    ]
+                                }
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Convert Options",
+                        "required": true
+                    },
+                    {
+                        "name": "pages",
+                        "type": "text",
+                        "label": "Pages"
+                    },
+                    {
+                        "name": "password",
+                        "type": "text",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "inline",
+                        "type": "boolean",
+                        "label": "Inline"
+                    },
+                    {
+                        "name": "async",
+                        "type": "select",
+                        "label": "Execution Mode",
+                        "validate": {
+                            "enum": [
+                                false,
+                                15000,
+                                "asyncCheckLater"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "profiles",
+                        "type": "text",
+                        "label": "Profiles"
+                    },
+                    {
+                        "name": "expiration",
+                        "type": "number",
+                        "label": "Output Links Expiration"
+                    },
+                    {
+                        "name": "export",
+                        "spec": [
+                            {
+                                "name": "exportType",
+                                "type": "select",
+                                "label": "Export Type",
+                                "required": true,
+                                "validate": {
+                                    "enum": [
+                                        "downloadFile",
+                                        "inline"
+                                    ]
+                                }
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Export Options",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 13,
+            "module": "util:TextAggregator",
+            "version": 1,
+            "parameters": {
+                "feeder": 10,
+                "rowSeparator": ""
+            },
+            "mapper": {
+                "value": "{{10.body.objects_value}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": 0
+                },
+                "restore": {
+                    "extra": {
+                        "feeder": {
+                            "label": "PDF.co - Convert from PDF [10]"
+                        }
+                    },
+                    "parameters": {
+                        "rowSeparator": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "rowSeparator",
+                        "type": "select",
+                        "label": "Row separator",
+                        "validate": {
+                            "enum": [
+                                "\n",
+                                "\t",
+                                "other"
+                            ]
+                        }
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "value",
+                        "type": "text",
+                        "label": "Text"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 17,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 1800,
+                    "y": 0
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 15,
+                            "module": "util:ComposeTransformer",
+                            "version": 1,
+                            "parameters": {},
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "length(PDF.co → Body → Value) > 1500\r\n​",
+                                            "o": "text:equal",
+                                            "b": ""
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "value": "ASSIGNMENT EVALUATION REPORT\r\n\r\nSummary:\r\nThe assignment demonstrates understanding of the given topic.\r\n\r\nStrengths:\r\n- Structured content\r\n- Relevant explanations\r\n\r\nWeaknesses:\r\n- Needs more references\r\n- Limited real-world examples\r\n\r\nScore: 8/10\r\n\r\nImprovement Suggestions:\r\n- Add citations\r\n- Improve conclusion\r\n​"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": -300
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 16,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 4437630
+                            },
+                            "mapper": {
+                                "chatId": "{{1.message.chat.id}}",
+                                "text": "{{15.value}}",
+                                "messageThreadId": "",
+                                "parseMode": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter",
+                                "replyMarkup": ""
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "My Telegram Bot connection",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "Empty"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 18,
+                            "module": "util:ComposeTransformer",
+                            "version": 1,
+                            "parameters": {},
+                            "filter": {
+                                "name": "",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "length(PDF.co → Body → Value) > 800\r\nAND\r\nlength(PDF.co → Body → Value) <= 1500\r\n​",
+                                            "o": "text:equal",
+                                            "b": ""
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "value": "ASSIGNMENT EVALUATION REPORT\r\n\r\nSummary:\r\nThe assignment shows good understanding of the topic.\r\n\r\nStrengths:\r\n- Clear explanation\r\n- Logical flow\r\n\r\nWeaknesses:\r\n- Needs better examples\r\n- Minor clarity issues\r\n\r\nScore: 7/10\r\n\r\nImprovement Suggestions:\r\n- Add more examples\r\n- Improve conclusion\r\n​"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 0
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 20,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 4437630
+                            },
+                            "mapper": {
+                                "chatId": "{{1.message.chat.id}}",
+                                "text": "{{18.value}}",
+                                "messageThreadId": "",
+                                "parseMode": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter",
+                                "replyMarkup": ""
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 0
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "My Telegram Bot connection",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "Empty"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 19,
+                            "module": "util:ComposeTransformer",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "value": "ASSIGNMENT EVALUATION REPORT\r\n\r\nSummary:\r\nThe assignment covers the topic briefly.\r\n\r\nStrengths:\r\n- Basic understanding\r\n\r\nWeaknesses:\r\n- Lack of depth\r\n- Very few examples\r\n\r\nScore: 5/10\r\n\r\nImprovement Suggestions:\r\n- Expand explanations\r\n- Add references\r\n​"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2100,
+                                    "y": 300
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 21,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 4437630
+                            },
+                            "mapper": {
+                                "chatId": "{{1.message.chat.id}}",
+                                "text": "{{19.value}}",
+                                "messageThreadId": "",
+                                "parseMode": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter",
+                                "replyMarkup": ""
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 2400,
+                                    "y": 300
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "My Telegram Bot connection",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "Empty"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    }
+}
